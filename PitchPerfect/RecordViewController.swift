@@ -9,24 +9,34 @@
 
 import UIKit
 
-class RecordViewController: UIViewController {
+final class RecordViewController: UIViewController {
     
     var audioSnippet: Audio?
-
-    @IBAction func recordAudio(sender: AnyObject) {
-        performSegueWithIdentifier("showPlaybackController", sender: self)
+    
+    var hidden: Bool {
+        get {
+            return self.recordingLabel.hidden && self.stopButton.hidden
+        }
+        set (isHidden) {
+            self.recordingLabel.hidden = isHidden
+            self.stopButton.hidden = isHidden
+        }
     }
     
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        // Do any additional setup after loading the view, typically from a nib.
+    @IBOutlet weak var recordingLabel: UILabel!
+    @IBOutlet weak var stopButton: UIButton!
+    
+    @IBAction func stopButtonPressed(sender: AnyObject) {
+        performSegueWithIdentifier("showPlaybackController", sender: self)
     }
 
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
+    @IBAction func recordAudio(sender: AnyObject) {
+        hidden = false
     }
-
-
+    
+    final override func viewWillAppear(animated: Bool) {
+        super.viewWillAppear(animated)
+        hidden = true
+    }
 }
 

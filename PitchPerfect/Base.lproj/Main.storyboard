@@ -17,7 +17,11 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Yrr-zJ-djE">
-                                <rect key="frame" x="230" y="241" width="141" height="127"/>
+                                <rect key="frame" x="264" y="268" width="72" height="64"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="60" id="f7f-sa-jTt"/>
+                                    <constraint firstAttribute="height" constant="60" id="oOs-PW-mjh"/>
+                                </constraints>
                                 <state key="normal" image="microphone">
                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
@@ -25,15 +29,40 @@
                                     <action selector="recordAudio:" destination="BYZ-38-t0r" eventType="touchUpInside" id="jtJ-7V-aMG"/>
                                 </connections>
                             </button>
+                            <label hidden="YES" opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="recording..." lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="lKn-cF-HET">
+                                <rect key="frame" x="257" y="340" width="87" height="21"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <button hidden="YES" opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="AcC-Rp-lnG">
+                                <rect key="frame" x="264" y="467" width="70" height="67"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="60" id="SuD-ny-9gt"/>
+                                    <constraint firstAttribute="height" constant="60" id="VoE-in-om8"/>
+                                </constraints>
+                                <state key="normal" image="stop-button">
+                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <connections>
+                                    <action selector="stopButtonPressed:" destination="BYZ-38-t0r" eventType="touchUpInside" id="SWg-ft-qQv"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                         <constraints>
                             <constraint firstAttribute="centerY" secondItem="Yrr-zJ-djE" secondAttribute="centerY" id="ANi-sc-o5u"/>
+                            <constraint firstItem="lKn-cF-HET" firstAttribute="top" secondItem="Yrr-zJ-djE" secondAttribute="bottom" constant="8" id="HiO-MV-3IY"/>
+                            <constraint firstItem="wfy-db-euE" firstAttribute="top" secondItem="AcC-Rp-lnG" secondAttribute="bottom" constant="60" id="WUO-ms-bZP"/>
+                            <constraint firstAttribute="centerX" secondItem="AcC-Rp-lnG" secondAttribute="centerX" id="YId-cB-I1w"/>
+                            <constraint firstAttribute="centerX" secondItem="lKn-cF-HET" secondAttribute="centerX" id="acc-Lm-Y7r"/>
                             <constraint firstAttribute="centerX" secondItem="Yrr-zJ-djE" secondAttribute="centerX" id="avx-ej-gii"/>
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" title="Record that audio, Y'all" id="XlM-er-vfr"/>
                     <connections>
+                        <outlet property="recordingLabel" destination="lKn-cF-HET" id="PSv-0f-nh6"/>
+                        <outlet property="stopButton" destination="AcC-Rp-lnG" id="3B4-QJ-Swv"/>
                         <segue destination="FqV-0H-7xX" kind="push" identifier="showPlaybackController" id="5zi-Za-ER2"/>
                     </connections>
                 </viewController>
@@ -81,5 +110,6 @@
     </scenes>
     <resources>
         <image name="microphone" width="200" height="200"/>
+        <image name="stop-button" width="100" height="100"/>
     </resources>
 </document>
