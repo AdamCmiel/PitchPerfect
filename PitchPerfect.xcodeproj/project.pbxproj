@@ -85,10 +85,10 @@
 		77C22D141B9B2C5A00FCBE20 /* PitchPerfect */ = {
 			isa = PBXGroup;
 			children = (
-				771DCED31B9B7A55005DB442 /* PlaybackViewController.swift */,
 				77C22D371B9B71C700FCBE20 /* Pitch Perfect Images */,
 				77C22D171B9B2C5A00FCBE20 /* AppDelegate.swift */,
 				77C22D191B9B2C5A00FCBE20 /* RecordViewController.swift */,
+				771DCED31B9B7A55005DB442 /* PlaybackViewController.swift */,
 				77C22D1B1B9B2C5A00FCBE20 /* Main.storyboard */,
 				771DCECF1B9B75C3005DB442 /* Audio.swift */,
 				77C22D391B9B71D300FCBE20 /* Media.xcassets */,

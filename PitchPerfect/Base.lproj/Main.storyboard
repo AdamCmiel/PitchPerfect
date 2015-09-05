@@ -81,7 +81,26 @@
                     <view key="view" contentMode="scaleToFill" id="aA0-X6-QBU">
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="AYK-RC-3TQ">
+                                <rect key="frame" x="260" y="260" width="80" height="80"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="60" id="oPT-0E-WND"/>
+                                    <constraint firstAttribute="height" constant="60" id="opz-au-iI3"/>
+                                </constraints>
+                                <state key="normal" image="resume-blue">
+                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <connections>
+                                    <action selector="playButtonPressed:" destination="FqV-0H-7xX" eventType="touchUpInside" id="dKk-Pn-6dq"/>
+                                </connections>
+                            </button>
+                        </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstAttribute="centerX" secondItem="AYK-RC-3TQ" secondAttribute="centerX" id="K7a-fv-SEv"/>
+                            <constraint firstAttribute="centerY" secondItem="AYK-RC-3TQ" secondAttribute="centerY" id="kif-fv-8g0"/>
+                        </constraints>
                     </view>
                     <navigationItem key="navigationItem" title="Play it back" id="ldJ-2u-q5t"/>
                 </viewController>
@@ -110,6 +129,7 @@
     </scenes>
     <resources>
         <image name="microphone" width="200" height="200"/>
+        <image name="resume-blue" width="80" height="80"/>
         <image name="stop-button" width="100" height="100"/>
     </resources>
 </document>
