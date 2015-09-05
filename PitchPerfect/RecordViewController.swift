@@ -1,3 +1,4 @@
+
 //
 //  ViewController.swift
 //  PitchPerfect
@@ -8,8 +9,14 @@
 
 import UIKit
 
-class ViewController: UIViewController {
+class RecordViewController: UIViewController {
+    
+    var audioSnippet: Audio?
 
+    @IBAction func recordAudio(sender: AnyObject) {
+        performSegueWithIdentifier("showPlaybackController", sender: self)
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
