@@ -21,9 +21,9 @@ final class Audio: NSObject, AVAudioRecorderDelegate {
 
         let recordSettings: [NSObject: AnyObject] = [
             AVFormatIDKey: kAudioFormatAppleLossless,
-            AVEncoderAudioQualityKey : AVAudioQuality.Max.rawValue,
+            AVEncoderAudioQualityKey : AVAudioQuality.Medium.rawValue,
             AVEncoderBitRateKey : 16,
-            AVNumberOfChannelsKey: 2,
+            AVNumberOfChannelsKey: 1,
             AVSampleRateKey : 44100.0
         ]
         
@@ -74,7 +74,7 @@ final class Audio: NSObject, AVAudioRecorderDelegate {
         callback = then
     }
     
-    func audioRecorderDidFinishRecording(recorder: AVAudioRecorder!, successfully flag: Bool) {
+    final func audioRecorderDidFinishRecording(recorder: AVAudioRecorder!, successfully flag: Bool) {
         if flag {
             callback?()
         }
@@ -83,11 +83,19 @@ final class Audio: NSObject, AVAudioRecorderDelegate {
         }
     }
     
-    func prepareToPlay() {
+    final func prepareToPlay() {
+        var error: NSError?
+        player = AVAudioPlayer(contentsOfURL: url, error: &error)
+        
+        if let err = error {
+            println("there was a problem replacing the audio player")
+        }
+        
         player.prepareToPlay()
     }
     
-    func play() {
+    final func play() {
+        println("play that back")
         player.play()
     }
     
