@@ -2,6 +2,7 @@
 <document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="7706" systemVersion="14F27" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="tBw-cK-RrG">
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="7703"/>
+        <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
     </dependencies>
     <scenes>
         <!--Record that audio, Y'all-->
@@ -83,7 +84,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="AYK-RC-3TQ">
-                                <rect key="frame" x="260" y="260" width="80" height="80"/>
+                                <rect key="frame" x="260" y="463" width="80" height="80"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="60" id="oPT-0E-WND"/>
                                     <constraint firstAttribute="height" constant="60" id="opz-au-iI3"/>
@@ -92,17 +93,86 @@
                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
                                 <connections>
-                                    <action selector="playButtonPressed:" destination="FqV-0H-7xX" eventType="touchUpInside" id="dKk-Pn-6dq"/>
+                                    <action selector="toggleButtonPressed:" destination="FqV-0H-7xX" eventType="touchUpInside" id="1rz-lB-fso"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="MEF-PF-tbF">
+                                <rect key="frame" x="136" y="165" width="79" height="78"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="60" id="mZj-Bf-79k"/>
+                                    <constraint firstAttribute="width" constant="60" id="vn7-G2-n9l"/>
+                                </constraints>
+                                <state key="normal" image="hare">
+                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <connections>
+                                    <action selector="hareButtonPressed:" destination="FqV-0H-7xX" eventType="touchUpInside" id="Y8K-oL-LuS"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="3zx-Rn-bbt">
+                                <rect key="frame" x="377" y="165" width="80" height="80"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="60" id="18K-Xe-3C5"/>
+                                    <constraint firstAttribute="height" constant="60" id="1P5-JV-wez"/>
+                                </constraints>
+                                <state key="normal" image="snail">
+                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <connections>
+                                    <action selector="snailButtonPressed:" destination="FqV-0H-7xX" eventType="touchUpInside" id="1cK-vp-7a8"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="v1g-RR-lOm">
+                                <rect key="frame" x="138" y="349" width="77" height="76"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="60" id="fFM-Zv-Hjg"/>
+                                    <constraint firstAttribute="height" constant="60" id="xG3-db-fI9"/>
+                                </constraints>
+                                <state key="normal" image="chipmunk">
+                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <connections>
+                                    <action selector="chipmunkButtonPressed:" destination="FqV-0H-7xX" eventType="touchUpInside" id="EzA-q3-bvF"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Kq9-wG-PSJ">
+                                <rect key="frame" x="376" y="347" width="81" height="78"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="60" id="b2e-Qy-Bfb"/>
+                                    <constraint firstAttribute="height" constant="60" id="lqm-sR-RJs"/>
+                                </constraints>
+                                <state key="normal" image="vader">
+                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <connections>
+                                    <action selector="vaderButtonPressed:" destination="FqV-0H-7xX" eventType="touchUpInside" id="IqZ-UU-xPP"/>
                                 </connections>
                             </button>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
+                            <constraint firstItem="3zx-Rn-bbt" firstAttribute="top" secondItem="IuA-p4-OTX" secondAttribute="bottom" constant="60" id="8qQ-po-VFI"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="Kq9-wG-PSJ" secondAttribute="trailing" constant="60" id="BS3-ao-YVE"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="3zx-Rn-bbt" secondAttribute="trailing" constant="60" id="H7t-EM-2id"/>
                             <constraint firstAttribute="centerX" secondItem="AYK-RC-3TQ" secondAttribute="centerX" id="K7a-fv-SEv"/>
+                            <constraint firstItem="MEF-PF-tbF" firstAttribute="top" secondItem="IuA-p4-OTX" secondAttribute="bottom" constant="60" id="K8S-iM-UcP"/>
+                            <constraint firstItem="MEF-PF-tbF" firstAttribute="leading" secondItem="aA0-X6-QBU" secondAttribute="leadingMargin" constant="60" id="Yg5-Us-HyP"/>
+                            <constraint firstItem="Kq9-wG-PSJ" firstAttribute="top" secondItem="3zx-Rn-bbt" secondAttribute="bottom" constant="60" id="ZAU-1D-B6p"/>
+                            <constraint firstItem="v1g-RR-lOm" firstAttribute="top" secondItem="MEF-PF-tbF" secondAttribute="bottom" constant="60" id="iig-9s-gAd"/>
                             <constraint firstAttribute="centerY" secondItem="AYK-RC-3TQ" secondAttribute="centerY" id="kif-fv-8g0"/>
+                            <constraint firstItem="v1g-RR-lOm" firstAttribute="leading" secondItem="aA0-X6-QBU" secondAttribute="leadingMargin" constant="60" id="wO6-Vu-wa4"/>
+                            <constraint firstItem="tcx-Tg-SSm" firstAttribute="top" secondItem="AYK-RC-3TQ" secondAttribute="bottom" constant="60" id="zGF-Kk-VcD"/>
                         </constraints>
+                        <variation key="default">
+                            <mask key="constraints">
+                                <exclude reference="kif-fv-8g0"/>
+                            </mask>
+                        </variation>
                     </view>
                     <navigationItem key="navigationItem" title="Play it back" id="ldJ-2u-q5t"/>
+                    <connections>
+                        <outlet property="toggleButton" destination="AYK-RC-3TQ" id="WS6-49-jj8"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="cxY-mF-K5u" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
@@ -128,8 +198,12 @@
         </scene>
     </scenes>
     <resources>
+        <image name="chipmunk" width="200" height="200"/>
+        <image name="hare" width="200" height="200"/>
         <image name="microphone" width="200" height="200"/>
         <image name="resume-blue" width="80" height="80"/>
+        <image name="snail" width="200" height="200"/>
         <image name="stop-button" width="100" height="100"/>
+        <image name="vader" width="200" height="200"/>
     </resources>
 </document>

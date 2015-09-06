@@ -8,11 +8,12 @@
 
 import AVFoundation
 
-final class Audio: NSObject, AVAudioRecorderDelegate {
+final class Audio: NSObject, AVAudioRecorderDelegate, AVAudioPlayerDelegate {
     
     var recorder: AVAudioRecorder
-    var player: AVAudioPlayer
-    var callback: (() -> ())?
+    var player: AVAudioPlayer?
+    var finishedRecordingCallback: (() -> ())?
+    var finishedPlayingCallback: (() -> ())?
     var url: NSURL
     
     override init () {
@@ -47,14 +48,8 @@ final class Audio: NSObject, AVAudioRecorderDelegate {
                 println("audioRecorder error: \(err.localizedDescription)")
             }
             
-            var error: NSError?
-            self.player = AVAudioPlayer(contentsOfURL: url, error: &error)
-            
-            if let err = error {
-                println("audioPlayer error: \(err.localizedDescription)")
-            }
-            
             super.init()
+            resetPlayer()
         }
         else {
             fatalError("Cannot record audio")
@@ -71,32 +66,77 @@ final class Audio: NSObject, AVAudioRecorderDelegate {
     
     final func save(then: () -> ()) {
         recorder.stop()
-        callback = then
+        finishedRecordingCallback = then
     }
     
     final func audioRecorderDidFinishRecording(recorder: AVAudioRecorder!, successfully flag: Bool) {
         if flag {
-            callback?()
+            finishedRecordingCallback?()
         }
         else {
             fatalError("did not successfully finish recording")
         }
     }
     
-    final func prepareToPlay() {
+    final func resetPlayer() {
         var error: NSError?
         player = AVAudioPlayer(contentsOfURL: url, error: &error)
+        player?.delegate = self
         
         if let err = error {
-            println("there was a problem replacing the audio player")
+            println("audioPlayer error: \(err.localizedDescription)")
         }
         
-        player.prepareToPlay()
+        player?.prepareToPlay()
     }
     
-    final func play() {
-        println("play that back")
-        player.play()
+    final func modulateAndPlay(mod: Modulation) {
+        switch mod {
+        case .Chipmunk:
+            player?.rate = 2.0
+        case .Vader:
+            player?.rate = 0.5
+        case .Snail:
+            player?.rate = 0.5
+        case .Hare:
+            player?.rate = 2.0
+        }
+        
+        player?.play()
+    }
+    
+    enum Modulation {
+        case Chipmunk
+        case Vader
+        case Snail
+        case Hare
+    }
+    
+    final func togglePlaying() -> Status {
+        if let p = player {
+            if p.playing {
+                p.pause()
+            }
+            else {
+                p.play()
+            }
+            
+            return p.playing ? .Playing : .Paused
+        }
+        else {
+            return .NoContent
+        }
+    }
+    
+    enum Status {
+        case Playing
+        case Paused
+        case Stopped
+        case NoContent
+    }
+    
+    func audioPlayerDidFinishPlaying(player: AVAudioPlayer!, successfully flag: Bool) {
+        finishedPlayingCallback?()
     }
     
 }
