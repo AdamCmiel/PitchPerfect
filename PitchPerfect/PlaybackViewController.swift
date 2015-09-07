@@ -8,13 +8,17 @@
 
 import UIKit
 
+/// manage playback interface
 class PlaybackViewController: UIViewController, AudioPlayerDelegate {
     
-    var audioPlayer: AudioPlayer?
+    private var audioPlayer: AudioPlayer?
+    
+    /// the url of the audioFile to playback
     var url: NSURL?
     
     @IBOutlet weak var toggleButton: UIButton!
 
+    /// play if pause button displayed, pause otherwise
     @IBAction func toggleButtonPressed(sender: AnyObject) {
         let status = audioPlayer!.status
         println("toggle button pressed \(status.rawValue)")
@@ -51,14 +55,17 @@ class PlaybackViewController: UIViewController, AudioPlayerDelegate {
         playWithMod(.Distortion)
     }
     
-    final func normalizeLevels() {
+    /// reset levels in the audioPlayer
+    /// called by playWithMod
+    final private func normalizeLevels() {
         audioPlayer?.pitch = 1.0
         audioPlayer?.rate = 1.0
         audioPlayer?.reverb = 0.0
         audioPlayer?.distortion = 0.0
     }
     
-    final func playWithMod(mod: AudioPlayer.Modulation) {
+    /// play that modulated effect
+    final private func playWithMod(mod: AudioPlayer.Modulation) {
         println("playing with mod \(mod.rawValue)")
         normalizeLevels()
         
@@ -84,7 +91,8 @@ class PlaybackViewController: UIViewController, AudioPlayerDelegate {
         changeButton(.Playing)
     }
     
-    final func changeButton(status: AudioPlayer.Status) {
+    /// show the play and pause buttons when appropriate
+    final private func changeButton(status: AudioPlayer.Status) {
         switch status {
         case .Playing:
             println("changing to pause button")
@@ -97,11 +105,13 @@ class PlaybackViewController: UIViewController, AudioPlayerDelegate {
             println("changing to play button")
             toggleButton.setImage(UIImage(named: "resume-blue"), forState: .Normal)
             toggleButton.setImage(UIImage(named: "resume-gray"), forState: .Highlighted)
-        case .NoContent:
-            fatalError("there's no content")
         }
     }
     
+    // MARK: - UIViewController
+    
+    /// create the AudioPlayer with the url from the AudioRecorder
+    /// replace back with "Record"
     override func viewWillAppear(animated: Bool) {
         let backButton = UIBarButtonItem()
         backButton.title = "Record"
