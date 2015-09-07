@@ -60,15 +60,15 @@ struct AudioPlayer {
     
     /// the audio file url
     var url: NSURL!
-    var audioFile: AVAudioFile!
-    var audioEngine: AVAudioEngine!
+    private var audioFile: AVAudioFile!
+    private var audioEngine: AVAudioEngine!
     
     /// The audio effect nodes
-    var playerNode: AVAudioPlayerNode!
-    var pitchNode: AVAudioUnitTimePitch!
-    var rateNode: AVAudioUnitVarispeed!
-    var reverbNode: AVAudioUnitReverb!
-    var distortionNode: AVAudioUnitDistortion!
+    private var playerNode: AVAudioPlayerNode!
+    private var pitchNode: AVAudioUnitTimePitch!
+    private var rateNode: AVAudioUnitVarispeed!
+    private var reverbNode: AVAudioUnitReverb!
+    private var distortionNode: AVAudioUnitDistortion!
     
     var delegate: AudioPlayerDelegate!
     
