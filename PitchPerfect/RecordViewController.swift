@@ -7,14 +7,11 @@
 //
 
 import UIKit
+import AVFoundation
 
-final class RecordViewController: UIViewController {
+final class RecordViewController: UIViewController, AVAudioRecorderDelegate {
     
-    /**
-        :property: audioSnippet
-        :property: hidden
-     */
-    var audioSnippet: Audio?
+    var audioSnippet: AudioRecorder?
     var hidden: Bool {
         get {
             return self.recordingLabel.hidden && self.stopButton.hidden
@@ -30,16 +27,15 @@ final class RecordViewController: UIViewController {
     
     @IBAction func stopButtonPressed(sender: AnyObject) {
         println("stop recording audio")
-        audioSnippet?.save {
-            self.performSegueWithIdentifier("showPlaybackController", sender: self)
-        }
+        audioSnippet?.save()
     }
 
     @IBAction func recordAudio(sender: AnyObject) {
         hidden = false
         println("start recording audio")
         
-        audioSnippet = Audio()
+        audioSnippet = AudioRecorder()
+        audioSnippet?.recorder.delegate = self
         audioSnippet?.record()
     }
     
@@ -50,8 +46,12 @@ final class RecordViewController: UIViewController {
     
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
         if let playbackViewController = segue.destinationViewController as? PlaybackViewController {
-            playbackViewController.audioSnippet = audioSnippet
+            playbackViewController.url = audioSnippet?.url
         }
+    }
+    
+    final func audioRecorderDidFinishRecording(recorder: AVAudioRecorder!, successfully flag: Bool) {
+        self.performSegueWithIdentifier("showPlaybackController", sender: self)
     }
 }
 

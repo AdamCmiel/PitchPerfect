@@ -7,10 +7,12 @@
 //
 
 import UIKit
+import AVFoundation
 
-class PlaybackViewController: UIViewController {
+class PlaybackViewController: UIViewController, AudioPlayerDelegate {
     
-    var audioSnippet: Audio?
+    var audioSnippet: AudioPlayer?
+    var url: NSURL?
     
     @IBOutlet weak var toggleButton: UIButton!
 
@@ -18,7 +20,7 @@ class PlaybackViewController: UIViewController {
         let status = audioSnippet?.togglePlaying()
         
         if let s = status {
-            changeButton(s)
+            self.changeButton(s)
         }
         else {
             fatalError("there isn't a snippet")
@@ -41,12 +43,24 @@ class PlaybackViewController: UIViewController {
         playWithMod(.Vader)
     }
     
-    final func playWithMod(mod: Audio.Modulation) {
-        audioSnippet?.modulateAndPlay(mod)
+    final func playWithMod(mod: AudioPlayer.Modulation) {
+        //audioSnippet?.modulateAndPlay(mod)
+        switch mod {
+        case .Chipmunk:
+            audioSnippet?.pitch = 1000
+        case .Vader:
+            audioSnippet?.pitch = -1000
+        case .Snail:
+            audioSnippet?.rate = 0.5
+        case .Hare:
+            audioSnippet?.rate = 2.0
+        }
+        audioSnippet?.prepareToPlay()
+        audioSnippet?.play()
         changeButton(.Playing)
     }
     
-    final func changeButton(status: Audio.Status) {
+    final func changeButton(status: AudioPlayer.Status) {
         switch status {
         case .Playing:
             toggleButton.setImage(UIImage(named: "pause-blue"), forState: .Normal)
@@ -65,10 +79,15 @@ class PlaybackViewController: UIViewController {
         let backButton = UIBarButtonItem()
         backButton.title = "Record"
         navigationController?.navigationBar.topItem?.backBarButtonItem = backButton
-        audioSnippet?.resetPlayer()
-        audioSnippet?.finishedPlayingCallback = {
-            self.changeButton(.Stopped)
-        }
+        
+        audioSnippet = AudioPlayer(URL: url!)
+        audioSnippet?.prepareToPlay()
+        audioSnippet?.delegate = self
     }
-
+    
+    func audioDidFinishPlaying() {
+        audioSnippet?.cleanup()
+        audioSnippet = nil
+        self.changeButton(.Stopped)
+    }
 }

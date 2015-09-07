@@ -1,0 +1,62 @@
+//
+//  AudioRecorder.swift
+//  PitchPerfect
+//
+//  Created by Adam Cmiel on 9/6/15.
+//  Copyright (c) 2015 Adam Cmiel. All rights reserved.
+//
+
+import AVFoundation
+
+struct AudioRecorder {
+    var recorder: AVAudioRecorder!
+    var url: NSURL!
+    
+    init() {
+        let DOCUMENTS = NSSearchPathForDirectoriesInDomains(.DocumentDirectory, .UserDomainMask, true)[0] as! String
+        let WRITE_PATH = DOCUMENTS.stringByAppendingPathComponent("audioSample.caf")
+
+        let recordSettings: [NSObject: AnyObject] = [
+            AVFormatIDKey: kAudioFormatAppleLossless,
+            AVEncoderAudioQualityKey : AVAudioQuality.Medium.rawValue,
+            AVEncoderBitRateKey : 16,
+            AVNumberOfChannelsKey: 2,
+            AVSampleRateKey : 44100.0
+        ]
+        
+        var error: NSError?
+        
+        
+        if let url = NSURL(fileURLWithPath: WRITE_PATH) {
+            self.url = url
+            
+            let audioSession = AVAudioSession.sharedInstance()
+            audioSession.setCategory(AVAudioSessionCategoryPlayAndRecord,
+                error: &error)
+            
+            if let err = error {
+                println("audioSession error: \(err.localizedDescription)")
+            }
+            
+            self.recorder = AVAudioRecorder(URL: url, settings: recordSettings, error: &error)
+            
+            if let err = error {
+                println("audioRecorder error: \(err.localizedDescription)")
+            }
+        }
+        else {
+            fatalError("Cannot record audio")
+        }
+        
+        recorder.meteringEnabled = true
+        recorder.prepareToRecord()
+    }
+    
+    func record() {
+        recorder.record()
+    }
+    
+    func save() {
+        recorder.stop()
+    }
+}
