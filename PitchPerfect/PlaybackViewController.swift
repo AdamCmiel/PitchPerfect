@@ -16,15 +16,14 @@ class PlaybackViewController: UIViewController, AudioPlayerDelegate {
     @IBOutlet weak var toggleButton: UIButton!
 
     @IBAction func toggleButtonPressed(sender: AnyObject) {
-        if let status = audioPlayer?.togglePlaying() {
-            println("toggle button pressed \(status.hashValue)")
-            if status == .Paused {
-                playWithMod(.None)
-            }
-            changeButton(status)
+        let status = audioPlayer!.status
+        println("toggle button pressed \(status.rawValue)")
+        if status == .Paused {
+            // will call changeButton:
+            playWithMod(.None)
         }
         else {
-            fatalError("there isn't a snippet")
+            changeButton(status)
         }
     }
     
@@ -45,6 +44,8 @@ class PlaybackViewController: UIViewController, AudioPlayerDelegate {
     }
     
     final func playWithMod(mod: AudioPlayer.Modulation) {
+        println("playing with mod \(mod.rawValue)")
+        
         switch mod {
         case .Chipmunk:
             audioPlayer?.pitch = 1000
@@ -70,11 +71,14 @@ class PlaybackViewController: UIViewController, AudioPlayerDelegate {
     final func changeButton(status: AudioPlayer.Status) {
         switch status {
         case .Playing:
+            println("changing to pause button")
             toggleButton.setImage(UIImage(named: "pause-blue"), forState: .Normal)
             toggleButton.setImage(UIImage(named: "pause-gray"), forState: .Highlighted)
         case .Stopped:
+            println("playback stopped")
             fallthrough
         case .Paused:
+            println("changing to play button")
             toggleButton.setImage(UIImage(named: "resume-blue"), forState: .Normal)
             toggleButton.setImage(UIImage(named: "resume-gray"), forState: .Highlighted)
         case .NoContent:

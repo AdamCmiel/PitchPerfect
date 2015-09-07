@@ -11,14 +11,12 @@ import AVFoundation
 
 final class RecordViewController: UIViewController, AVAudioRecorderDelegate {
     
-    var audioSnippet: AudioRecorder?
-    var hidden: Bool {
-        get {
-            return self.recordingLabel.hidden && self.stopButton.hidden
-        }
-        set (isHidden) {
-            self.recordingLabel.hidden = isHidden
-            self.stopButton.hidden = isHidden
+    var audioRecorder: AudioRecorder?
+    var recording: Bool {
+        get { return !stopButton.hidden }
+        set (isRecording) {
+            recordingLabel.text = isRecording ? "recording..." : "Tap to record"
+            stopButton.hidden = !isRecording
         }
     }
 
@@ -27,31 +25,31 @@ final class RecordViewController: UIViewController, AVAudioRecorderDelegate {
     
     @IBAction func stopButtonPressed(sender: AnyObject) {
         println("stop recording audio")
-        audioSnippet?.save()
+        audioRecorder?.save()
     }
 
     @IBAction func recordAudio(sender: AnyObject) {
-        hidden = false
+        recording = true
         println("start recording audio")
         
-        audioSnippet = AudioRecorder()
-        audioSnippet?.recorder.delegate = self
-        audioSnippet?.record()
+        audioRecorder = AudioRecorder()
+        audioRecorder?.recorder.delegate = self
+        audioRecorder?.record()
     }
     
     final override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated)
-        hidden = true
+        recording = false
     }
     
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
         if let playbackViewController = segue.destinationViewController as? PlaybackViewController {
-            playbackViewController.url = audioSnippet?.url
+            playbackViewController.url = audioRecorder?.url
         }
     }
     
     final func audioRecorderDidFinishRecording(recorder: AVAudioRecorder!, successfully flag: Bool) {
-        self.performSegueWithIdentifier("showPlaybackController", sender: self)
+        performSegueWithIdentifier("showPlaybackController", sender: self)
     }
+    
 }
-

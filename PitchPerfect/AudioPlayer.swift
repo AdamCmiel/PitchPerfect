@@ -14,19 +14,30 @@ protocol AudioPlayerDelegate {
 
 struct AudioPlayer {
     
-    enum Modulation {
-        case Chipmunk
-        case Vader
-        case Snail
-        case Hare
-        case None
+    var status: Status {
+        get {
+            if playerNode.playing {
+                return .Playing
+            }
+            else {
+                return .Paused
+            }
+        }
     }
     
-    enum Status {
-        case Playing
-        case Paused
-        case Stopped
-        case NoContent
+    enum Modulation: String {
+        case Chipmunk = "Chipmunk"
+        case Vader = "Vader"
+        case Snail = "Snail"
+        case Hare = "Hare"
+        case None = "None"
+    }
+    
+    enum Status: String {
+        case Playing = "playing"
+        case Paused = "paused"
+        case Stopped = "stopped"
+        case NoContent = "noContent"
     }
     
     var url: NSURL!
@@ -69,6 +80,7 @@ struct AudioPlayer {
         
         playerNode.scheduleFile(audioFile, atTime: nil) {
             dispatch_async(dispatch_get_main_queue()) {
+                self.playerNode.pause()
                 self.delegate?.audioDidFinishPlaying()
             }
         }
@@ -81,14 +93,5 @@ struct AudioPlayer {
     
     func pause() {
         playerNode.pause()
-    }
-    
-    func togglePlaying() -> Status {
-        if playerNode.playing {
-            return .Playing
-        }
-        else {
-            return .Paused
-        }
     }
 }
