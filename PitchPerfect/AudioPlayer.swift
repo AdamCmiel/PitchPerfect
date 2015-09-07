@@ -35,7 +35,6 @@ struct AudioPlayer {
     var pitchNode: AVAudioUnitTimePitch!
     var rateNode: AVAudioUnitVarispeed!
     var delegate: AudioPlayerDelegate?
-    var buffer: AVAudioBuffer!
     
     var pitch: Float {
         get      { return pitchNode.pitch }
@@ -54,11 +53,6 @@ struct AudioPlayer {
         pitchNode = AVAudioUnitTimePitch()
         rateNode = AVAudioUnitVarispeed()
         
-        connectNodes()
-        audioEngine.startAndReturnError(nil)
-    }
-    
-    func connectNodes() {
         audioEngine.attachNode(playerNode)
         audioEngine.attachNode(pitchNode)
         audioEngine.attachNode(rateNode)
@@ -66,12 +60,7 @@ struct AudioPlayer {
         audioEngine.connect(playerNode, to: pitchNode, format: nil)
         audioEngine.connect(pitchNode, to: rateNode, format: nil)
         audioEngine.connect(rateNode, to: audioEngine.outputNode, format: nil)
-    }
-    
-    func cleanup() {
-        audioEngine.detachNode(playerNode)
-        audioEngine.detachNode(pitchNode)
-        audioEngine.detachNode(rateNode)
+        audioEngine.startAndReturnError(nil)
     }
     
     func prepareToPlay() {
@@ -85,6 +74,7 @@ struct AudioPlayer {
     }
     
     func play() {
+        prepareToPlay()
         playerNode.play()
     }
     

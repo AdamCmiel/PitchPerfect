@@ -14,18 +14,9 @@ struct AudioRecorder {
     
     init() {
         let DOCUMENTS = NSSearchPathForDirectoriesInDomains(.DocumentDirectory, .UserDomainMask, true)[0] as! String
-        let WRITE_PATH = DOCUMENTS.stringByAppendingPathComponent("audioSample.caf")
+        let WRITE_PATH = DOCUMENTS.stringByAppendingPathComponent("audioSample.wav")
 
-        let recordSettings: [NSObject: AnyObject] = [
-            AVFormatIDKey: kAudioFormatAppleLossless,
-            AVEncoderAudioQualityKey : AVAudioQuality.Medium.rawValue,
-            AVEncoderBitRateKey : 16,
-            AVNumberOfChannelsKey: 2,
-            AVSampleRateKey : 44100.0
-        ]
-        
         var error: NSError?
-        
         
         if let url = NSURL(fileURLWithPath: WRITE_PATH) {
             self.url = url
@@ -38,7 +29,7 @@ struct AudioRecorder {
                 println("audioSession error: \(err.localizedDescription)")
             }
             
-            self.recorder = AVAudioRecorder(URL: url, settings: recordSettings, error: &error)
+            self.recorder = AVAudioRecorder(URL: url, settings: nil, error: &error)
             
             if let err = error {
                 println("audioRecorder error: \(err.localizedDescription)")

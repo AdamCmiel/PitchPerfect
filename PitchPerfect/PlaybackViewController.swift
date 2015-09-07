@@ -7,7 +7,6 @@
 //
 
 import UIKit
-import AVFoundation
 
 class PlaybackViewController: UIViewController, AudioPlayerDelegate {
     
@@ -86,8 +85,6 @@ class PlaybackViewController: UIViewController, AudioPlayerDelegate {
     }
     
     func audioDidFinishPlaying() {
-        audioSnippet?.cleanup()
-        audioSnippet = nil
         self.changeButton(.Stopped)
     }
 }
