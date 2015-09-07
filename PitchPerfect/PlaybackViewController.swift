@@ -43,22 +43,38 @@ class PlaybackViewController: UIViewController, AudioPlayerDelegate {
         playWithMod(.Vader)
     }
     
+    @IBAction func reverbButtonPressed(sender: AnyObject) {
+        playWithMod(.Reverb)
+    }
+    
+    @IBAction func distortionButtonPressed(sender: AnyObject) {
+        playWithMod(.Distortion)
+    }
+    
+    final func normalizeLevels() {
+        audioPlayer?.pitch = 1.0
+        audioPlayer?.rate = 1.0
+        audioPlayer?.reverb = 0.0
+        audioPlayer?.distortion = 0.0
+    }
+    
     final func playWithMod(mod: AudioPlayer.Modulation) {
         println("playing with mod \(mod.rawValue)")
+        normalizeLevels()
         
         switch mod {
         case .Chipmunk:
             audioPlayer?.pitch = 1000
-            audioPlayer?.rate = 1.0
         case .Vader:
             audioPlayer?.pitch = -1000
-            audioPlayer?.rate = 1.0
         case .Snail:
-            audioPlayer?.pitch = 1.0
             audioPlayer?.rate = 0.5
         case .Hare:
-            audioPlayer?.pitch = 1.0
             audioPlayer?.rate = 2.0
+        case .Reverb:
+            audioPlayer?.reverb = 50
+        case .Distortion:
+            audioPlayer?.distortion = 50
         case .None:
             audioPlayer?.pitch = 1.0
             audioPlayer?.rate = 1.0
