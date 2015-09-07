@@ -29,7 +29,11 @@ struct AudioRecorder {
             println("audioSession error: \(err.localizedDescription)")
         }
         
-        self.recorder = AVAudioRecorder(URL: url, settings: nil, error: &error)
+        let settings: [NSObject: AnyObject] = [
+            AVNumberOfChannelsKey: 1
+        ]
+        
+        self.recorder = AVAudioRecorder(URL: url, settings: settings, error: &error)
         
         if let err = error {
             println("audioRecorder error: \(err.localizedDescription)")
