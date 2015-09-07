@@ -18,25 +18,21 @@ struct AudioRecorder {
 
         var error: NSError?
         
-        if let url = NSURL(fileURLWithPath: WRITE_PATH) {
-            self.url = url
-            
-            let audioSession = AVAudioSession.sharedInstance()
-            audioSession.setCategory(AVAudioSessionCategoryPlayAndRecord,
-                error: &error)
-            
-            if let err = error {
-                println("audioSession error: \(err.localizedDescription)")
-            }
-            
-            self.recorder = AVAudioRecorder(URL: url, settings: nil, error: &error)
-            
-            if let err = error {
-                println("audioRecorder error: \(err.localizedDescription)")
-            }
+        let url = NSURL(fileURLWithPath: WRITE_PATH)!
+        self.url = url
+        
+        let audioSession = AVAudioSession.sharedInstance()
+        audioSession.setCategory(AVAudioSessionCategoryPlayAndRecord,
+            error: &error)
+        
+        if let err = error {
+            println("audioSession error: \(err.localizedDescription)")
         }
-        else {
-            fatalError("Cannot record audio")
+        
+        self.recorder = AVAudioRecorder(URL: url, settings: nil, error: &error)
+        
+        if let err = error {
+            println("audioRecorder error: \(err.localizedDescription)")
         }
         
         recorder.meteringEnabled = true

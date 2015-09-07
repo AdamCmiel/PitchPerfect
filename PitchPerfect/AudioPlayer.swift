@@ -19,6 +19,7 @@ struct AudioPlayer {
         case Vader
         case Snail
         case Hare
+        case None
     }
     
     enum Status {
@@ -84,12 +85,10 @@ struct AudioPlayer {
     
     func togglePlaying() -> Status {
         if playerNode.playing {
-            pause()
-            return .Paused
+            return .Playing
         }
         else {
-            play()
-            return .Playing
+            return .Paused
         }
     }
 }

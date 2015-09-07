@@ -171,7 +171,7 @@
                     </view>
                     <navigationItem key="navigationItem" title="Play it back" id="ldJ-2u-q5t"/>
                     <connections>
-                        <outlet property="toggleButton" destination="AYK-RC-3TQ" id="WS6-49-jj8"/>
+                        <outlet property="toggleButton" destination="AYK-RC-3TQ" id="dtI-WO-7WZ"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="cxY-mF-K5u" userLabel="First Responder" sceneMemberID="firstResponder"/>

@@ -10,16 +10,18 @@ import UIKit
 
 class PlaybackViewController: UIViewController, AudioPlayerDelegate {
     
-    var audioSnippet: AudioPlayer?
+    var audioPlayer: AudioPlayer?
     var url: NSURL?
     
     @IBOutlet weak var toggleButton: UIButton!
 
     @IBAction func toggleButtonPressed(sender: AnyObject) {
-        let status = audioSnippet?.togglePlaying()
-        
-        if let s = status {
-            self.changeButton(s)
+        if let status = audioPlayer?.togglePlaying() {
+            println("toggle button pressed \(status.hashValue)")
+            if status == .Paused {
+                playWithMod(.None)
+            }
+            changeButton(status)
         }
         else {
             fatalError("there isn't a snippet")
@@ -43,19 +45,25 @@ class PlaybackViewController: UIViewController, AudioPlayerDelegate {
     }
     
     final func playWithMod(mod: AudioPlayer.Modulation) {
-        //audioSnippet?.modulateAndPlay(mod)
         switch mod {
         case .Chipmunk:
-            audioSnippet?.pitch = 1000
+            audioPlayer?.pitch = 1000
+            audioPlayer?.rate = 1.0
         case .Vader:
-            audioSnippet?.pitch = -1000
+            audioPlayer?.pitch = -1000
+            audioPlayer?.rate = 1.0
         case .Snail:
-            audioSnippet?.rate = 0.5
+            audioPlayer?.pitch = 1.0
+            audioPlayer?.rate = 0.5
         case .Hare:
-            audioSnippet?.rate = 2.0
+            audioPlayer?.pitch = 1.0
+            audioPlayer?.rate = 2.0
+        case .None:
+            audioPlayer?.pitch = 1.0
+            audioPlayer?.rate = 1.0
         }
-        audioSnippet?.prepareToPlay()
-        audioSnippet?.play()
+        
+        audioPlayer?.play()
         changeButton(.Playing)
     }
     
@@ -79,12 +87,14 @@ class PlaybackViewController: UIViewController, AudioPlayerDelegate {
         backButton.title = "Record"
         navigationController?.navigationBar.topItem?.backBarButtonItem = backButton
         
-        audioSnippet = AudioPlayer(URL: url!)
-        audioSnippet?.prepareToPlay()
-        audioSnippet?.delegate = self
+        audioPlayer = AudioPlayer(URL: url!)
+        audioPlayer?.prepareToPlay()
+        audioPlayer?.delegate = self
     }
     
+    // MARK: - AudioPlayerDelegate
+    
     func audioDidFinishPlaying() {
-        self.changeButton(.Stopped)
+        changeButton(.Stopped)
     }
 }
